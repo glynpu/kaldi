@@ -114,7 +114,7 @@ def read_transition_model(rxfilename):
         Return a `TransitionModel`
     '''
     ki = kaldi_pybind.Input()
-    is_opened, is_binary = ki.Open(rxfilename, read_header=True)
+    is_opened, is_binary = ki.Open(rxfilename, binary=False, write_header=True)
     if not is_opened:
         raise FileNotOpenException('Failed to open {}'.format(rxfilename))
 
@@ -140,3 +140,22 @@ def read_nnet3_model(rxfilename):
     ki.Close()
 
     return nnet
+
+def write_nnet3_model(nnet, wxfilename):
+    '''Read nnet model from an rxfilename.
+    '''
+    # ko = kaldi_pybind.Output()
+    # is_opened, is_binary = ko.Open(wxfilename, read_header=True)
+    ko = kaldi_pybind.Output(wxfilename, False) 
+    # print("is_opened: ", is_opened)
+    # print("is_binary: ", is_binary)
+    # if not is_opened:
+    #     raise FileNotOpenException('Failed to open {}'.format(rxfilename))
+
+    # #nnet = kaldi_pybind.nnet3.Nnet()
+    # #  1. (self: kaldi_pybind.Output, wxfilename: str, binary: bool, write_header: bool)
+    nnet.Write(ko.Stream(), False)
+
+    #ko.Close()
+
+    #return is_opened

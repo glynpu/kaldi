@@ -29,8 +29,13 @@ void pybind_nnet_normalize_component(py::module& m) {
       .def("Mean", &PyClass::Mean)
       .def("Var", &PyClass::Var)
       .def("Count", &PyClass::Count)
+      // .def("stats_sum_", &PyClass::stats_sum_)
+      // .def("stats_sumsq_", &PyClass::stats_sumsq_)
       .def("Eps", &PyClass::Eps)
       .def("SetTestMode", &PyClass::SetTestMode, py::arg("test_mode"))
+      .def("SetOffset", &PyClass::Offset, py::return_value_policy::reference)
+      .def("SetScale", overload_cast_<>()(&PyClass::Scale, py::const_),
+           py::return_value_policy::reference)
       .def("Offset", &PyClass::Offset, py::return_value_policy::reference)
       .def("Scale", overload_cast_<>()(&PyClass::Scale, py::const_),
            py::return_value_policy::reference);

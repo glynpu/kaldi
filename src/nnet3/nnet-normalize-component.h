@@ -223,11 +223,18 @@ class BatchNormComponent: public Component {
   // Note: the offset and scale will only be nonempty in 'test mode'.
   const CuVector<BaseFloat> &Offset() const { return offset_; }
   const CuVector<BaseFloat> &Scale() const { return scale_; }
+  CuVector<BaseFloat> &SetOffset() { return offset_; }
+  CuVector<BaseFloat> &SetScale() { return scale_; }
 
   CuVector<BaseFloat> Mean() const;
   CuVector<BaseFloat> Var() const;
   double Count() const { return count_; }
   BaseFloat Eps() const { return epsilon_; }
+
+  // sum-of-data component of stats of input data.
+  CuVector<double> stats_sum_;
+  // sum-of-squared component of stats of input data.
+  CuVector<double> stats_sumsq_;
 
  private:
 
@@ -285,10 +292,10 @@ class BatchNormComponent: public Component {
 
   // total count of stats stored by StoreStats().
   double count_;
-  // sum-of-data component of stats of input data.
-  CuVector<double> stats_sum_;
-  // sum-of-squared component of stats of input data.
-  CuVector<double> stats_sumsq_;
+  // // sum-of-data component of stats of input data.
+  // CuVector<double> stats_sum_;
+  // // sum-of-squared component of stats of input data.
+  // CuVector<double> stats_sumsq_;
 
   // offset_ and scale_ are derived from stats_sum_ and stats_sumsq_; they
   // dictate the transform that is done in 'test mode'.  They are set only when

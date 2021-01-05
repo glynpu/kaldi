@@ -635,9 +635,13 @@ void BatchNormComponent::Write(std::ostream &os, bool binary) const {
     var.AddVecVec(-1.0, mean, mean, 1.0);
   }
   WriteToken(os, binary, "<StatsMean>");
-  mean.Write(os, binary);
+  // mean.Write(os, binary);
+  // this offset_ is not the offset_ you want
+  std::cout << "offset_" << offset_ << std::endl;
+  offset_.Write(os, binary);
   WriteToken(os, binary, "<StatsVar>");
-  var.Write(os, binary);
+  // var.Write(os, binary);
+  scale_.Write(os, binary);
   WriteToken(os, binary, "</BatchNormComponent>");
 }
 

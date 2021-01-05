@@ -38,6 +38,16 @@ void pybind_cu_matrix(py::module& m) {
         .def("Set", &PyClass::Set, py::arg("value"))
         .def("Add", &PyClass::Add, py::arg("value"))
         .def("Scale", &PyClass::Scale, py::arg("value"))
+        //.def("CopyFromMat", &PyClass::CopyFromMat, py::arg("src"), py::arg("trans") = kNoTrans)
+
+
+// cu_matrix = CuFloatMatrix(2, 3)
+// float_matrix = FloatMatrix(2,3)
+// cu_matrix.CopyFromMat(float_matrix)
+// cu_matrix.CopyFromMat(src=float_matrix)
+        .def("CopyFromMat",[](PyClass* self, const kaldi::MatrixBase<float>& src){
+		self->CopyFromMat(src);
+	})
         .def("__getitem__",
              [](const PyClass& m, std::pair<ssize_t, ssize_t> i) {
                return m(i.first, i.second);

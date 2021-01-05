@@ -35,6 +35,7 @@ void pybind_nnet_nnet(py::module& m) {
       "non-member because it doesn't need special access).");
   nnet.def(py::init<>())
       .def("Read", &PyClass::Read, py::arg("is"), py::arg("binary"))
+      .def("Write", &PyClass::Write, py::arg("out"), py::arg("binary"))
       .def("GetComponentNames", &PyClass::GetComponentNames,
            "returns vector of component names (needed by some parsing code, "
            "for instance).",
